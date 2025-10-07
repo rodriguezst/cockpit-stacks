@@ -1,0 +1,18 @@
+{
+  "version": 0,
+  "requires": {
+    "cockpit": "276"
+  },
+  "name": "cockpit-stacks",
+  "main": {
+    "path": "index.html"
+  },
+  "priority": 10,
+  "content-security-policy": "default-src 'self' 'unsafe-inline' 'unsafe-eval'",
+  "menu": {
+    "index": {
+      "label": "Docker Stacks",
+      "order": 40
+    }
+  }
+}

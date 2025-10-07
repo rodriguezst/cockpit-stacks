@@ -1,0 +1,27 @@
+# Temporary files
+*.tmp
+*.swp
+*.swo
+*~
+.DS_Store
+
+# IDE files
+.vscode/
+.idea/
+*.sublime-*
+
+# Build artifacts
+node_modules/
+dist/
+build/
+
+# Logs
+*.log
+
+# Testing
+.coverage
+htmlcov/
+
+# Package management
+package-lock.json
+yarn.lock
