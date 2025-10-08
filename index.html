@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Docker Stacks</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../base1/patternfly.css" rel="stylesheet">
+    <link href="../base1/cockpit.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/material.min.css">
+    <link href="stacks.css" rel="stylesheet">
+    <script src="../base1/jquery.js"></script>
+    <script src="../base1/bootstrap.js"></script>
+    <script src="../base1/cockpit.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/yaml/yaml.min.js"></script>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="page-header">
+            <h1>Docker Compose Stacks Manager</h1>
+        </div>
+
+        <div class="toolbar-pf">
+            <div class="toolbar-pf-actions">
+                <div class="form-group toolbar-pf-filter">
+                    <button class="btn btn-primary" id="create-stack-btn">
+                        <span class="fa fa-plus"></span> Create New Stack
+                    </button>
+                    <button class="btn btn-default" id="refresh-btn">
+                        <span class="fa fa-refresh"></span> Refresh
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="stacks-list" class="list-group list-view-pf list-view-pf-view">
+            <div class="blank-slate-pf" id="loading-state">
+                <div class="blank-slate-pf-icon">
+                    <span class="spinner spinner-lg"></span>
+                </div>
+                <h1>Loading stacks...</h1>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Stack Modal -->
+    <div class="modal fade" id="create-stack-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span class="pficon pficon-close"></span>
+                    </button>
+                    <h4 class="modal-title">Create New Stack</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="stack-name">Stack Name</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="stack-name" 
+                                       placeholder="my-stack" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Compose YAML</label>
+                            <div class="col-sm-9">
+                                <textarea id="create-editor" style="height: 400px;"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="create-stack-confirm">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Stack Modal -->
+    <div class="modal fade" id="edit-stack-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span class="pficon pficon-close"></span>
+                    </button>
+                    <h4 class="modal-title">Edit Stack: <span id="edit-stack-name"></span></h4>
+                </div>
+                <div class="modal-body">
+                    <textarea id="edit-editor" style="height: 500px;"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="save-stack-btn">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Output Modal -->
+    <div class="modal fade" id="output-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span class="pficon pficon-close"></span>
+                    </button>
+                    <h4 class="modal-title" id="output-title">Operation Output</h4>
+                </div>
+                <div class="modal-body">
+                    <pre id="output-content" style="max-height: 500px; overflow-y: auto; background-color: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 3px;"></pre>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="stacks.js"></script>
+</body>
+</html>
